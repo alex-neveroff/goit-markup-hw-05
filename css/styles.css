@@ -29,6 +29,10 @@
   --bcg-footer-icon: rgba(255, 255, 255, 0.1);
   /* Колір фону карток у "Чим ми займаємося" */
   --work-card-bcg-color: rgba(47, 48, 58, 0.8);
+  /* Колір фону спливаючого вікна */
+  --portfolio-overlay: rgba(33, 150, 243, 0.9);
+  /* Час анімації */
+  --time-transition: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
@@ -125,12 +129,11 @@ h3 {
 
 .header-nav-item {
   flex-basis: calc((100% - 100px) / 3);
-  position: relative;
 }
 .header-contacts-item {
   flex-basis: calc((100% - 30px) / 2);
 }
-.header-nav-item .link,
+.header-nav-menu .link,
 .header-contacts .link {
   display: flex;
   align-items: center;
@@ -138,17 +141,20 @@ h3 {
 
   padding-top: 32px;
   padding-bottom: 32px;
+
+  transition: color 250ms var(--time-transition);
 }
 
 .header-nav-item .link {
   color: var(--header-color);
 }
 
-.link.current {
+.link.menu-current {
   color: var(--hover-blue-color);
+  position: relative;
 }
 
-.current::after {
+.menu-current::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -218,26 +224,26 @@ h3 {
 .hero .button {
   padding: 10px 32px;
 
-  background-color: var(--hover-blue-color);
-  color: var(--secondary-color);
-
   font-family: inherit;
   font-weight: 700;
   font-size: 16px;
   line-height: 1.88;
   letter-spacing: 0.06em;
 
-  cursor: pointer;
+  background-color: var(--hover-blue-color);
+  color: var(--secondary-color);
 
   border: none;
   border-radius: 4px;
 
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+
+  transition: background-color 250ms var(--time-transition);
 }
 .hero .button:hover,
 .hero .button:focus {
   background-color: var(--button-hover-color);
-  color: var(--secondary-color);
 
   outline: none;
 }
@@ -414,13 +420,16 @@ Fill: Solid
   justify-content: center;
 
   color: var(--icon-color);
+
+  border-radius: 50%;
+
+  transition: color 250ms var(--time-transition), background-color 250ms var(--time-transition);
 }
 
 .social-net-link:hover,
 .social-net-link:focus {
   color: var(--secondary-color);
   background-color: var(--hover-blue-color);
-  border-radius: 50%;
 
   outline: none;
 }
@@ -454,6 +463,8 @@ Fill: Solid
   border: 1px solid var(--icon-color);
 
   border-radius: 4px;
+
+  transition: color 250ms var(--time-transition), border-color 250ms var(--time-transition);
 }
 
 .icon-clients {
@@ -495,6 +506,9 @@ Fill: Solid
 
   border-radius: 4px;
   border: none;
+
+  transition: color 250ms var(--time-transition), background-color 250ms var(--time-transition),
+    box-shadow 250ms var(--time-transition);
 }
 
 .filter-button:hover,
@@ -502,13 +516,13 @@ Fill: Solid
   background-color: var(--hover-blue-color);
   color: var(--secondary-color);
 
-  outline: none;
-
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.08),
     0px 3px 1px rgba(0, 0, 0, 0.1);
+
+  outline: none;
 }
 
-.filter-button.current {
+.filter-current {
   padding: 6px 25px;
 
   background-color: var(--hover-blue-color);
@@ -556,14 +570,47 @@ Fill: Solid
   line-height: 1.875;
 }
 
-.portfolio-link:hover,
-.portfolio-link:focus {
+.portfolio-card-thumb {
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  padding: 63px 24px;
+
+  font-size: 18px;
+  line-height: 1.56;
+
+  color: var(--secondary-color);
+  background-color: var(--portfolio-overlay);
+
+  transform: translateY(100%);
+  transition: transform 250ms var(--time-transition);
+}
+
+.portfolio-link {
   display: block;
 
+  transition: box-shadow 250ms var(--time-transition);
+}
+
+.portfolio-link:hover,
+.portfolio-link:focus {
   box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.16), 0px 4px 4px rgba(0, 0, 0, 0.06),
     0px 1px 1px rgba(0, 0, 0, 0.12);
 
   outline: none;
+}
+
+.portfolio-link:hover .portfolio-card-overlay,
+.portfolio-link:focus .portfolio-card-overlay {
+  transform: translateY(0);
 }
 
 /* 
@@ -592,6 +639,11 @@ footer */
   display: inline-block;
 
   margin-bottom: 20px;
+}
+
+.footer-adress-link,
+.footer-link-contacts {
+  transition: color 250ms var(--time-transition);
 }
 
 .footer-adress-link:hover,
@@ -642,6 +694,8 @@ footer */
 
   background-color: var(--bcg-footer-icon);
   border-radius: 50%;
+
+  transition: background-color 250ms var(--time-transition);
 }
 
 .footer-social-net-link:hover,
