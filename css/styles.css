@@ -125,6 +125,7 @@ h3 {
 
 .header-nav-item {
   flex-basis: calc((100% - 100px) / 3);
+  position: relative;
 }
 .header-contacts-item {
   flex-basis: calc((100% - 30px) / 2);
@@ -143,8 +144,21 @@ h3 {
   color: var(--header-color);
 }
 
-.header-nav-item .link.current {
+.link.current {
   color: var(--hover-blue-color);
+}
+
+.current::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 4px;
+
+  background-color: var(--hover-blue-color);
+  border-radius: 2px;
 }
 
 .header-nav-menu .link:hover,
